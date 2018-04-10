@@ -63,12 +63,12 @@ public class MemberDAO {
 		return list;
 	}
 
-	public String searchMember(String userId){
+	public boolean searchMember(String userId){
 		ConnectionManager mgr = new ConnectionManager();
 		Connection con = mgr.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String name = null;
+		boolean flag = false;
 		
 		String sql = "SELECT * FROM member_tbl WHERE user_id LIKE ?";
 		
@@ -78,8 +78,8 @@ public class MemberDAO {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				name = rs.getString("user_id");
-				return name;
+				flag = true;
+				return flag;
 			}
 			
 		} catch (SQLException e) {
@@ -89,7 +89,7 @@ public class MemberDAO {
 			mgr.ConnectionClose(con, pstmt, rs);
 		}
 		
-		return name; 
+		return flag; 
 	}
 	
 	//회원 가입

@@ -18,7 +18,7 @@
 	function id_check(){
 		//alert("success");
 		var checkid = document.getElementById("userid").value;
-		window.open("./id_check.jsp","","width=300px height=200px");
+		window.open("./id_check.jsp","","width=600px height=400px");
 		return false;
 	}
 	

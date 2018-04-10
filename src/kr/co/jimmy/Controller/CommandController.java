@@ -70,9 +70,14 @@ public class CommandController extends HttpServlet {
 		} else if ("search".equals(cmd)) {
 			MemberDAO dao = new MemberDAO();
 			String id = request.getParameter("id");
-			String result = dao.searchMember(id);
-			
-			request.setAttribute("result", result);
+			boolean flag = dao.searchMember(id);
+			String message = "";
+			if(flag) {
+				message = "false";
+			} else {
+				message = "true";
+			}
+			request.setAttribute("result", message);
 			url = "./id_check.jsp";
 		} else if ("searchAll".equals(cmd)) {
 			MemberDAO dao = new MemberDAO();
