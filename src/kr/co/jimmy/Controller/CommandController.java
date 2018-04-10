@@ -70,10 +70,10 @@ public class CommandController extends HttpServlet {
 		} else if ("search".equals(cmd)) {
 			MemberDAO dao = new MemberDAO();
 			String id = request.getParameter("id");
-			int result = dao.searchMember(id);
+			String result = dao.searchMember(id);
 			
-			request.setAttribute("number", result);
-			url = "./Main/regist_member.jsp";
+			request.setAttribute("result", result);
+			url = "./id_check.jsp";
 		} else if ("searchAll".equals(cmd)) {
 			MemberDAO dao = new MemberDAO();
 			ArrayList<MemberVO> list = new ArrayList<MemberVO>();

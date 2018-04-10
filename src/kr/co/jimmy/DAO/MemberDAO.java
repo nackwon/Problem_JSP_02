@@ -63,7 +63,7 @@ public class MemberDAO {
 		return list;
 	}
 
-	public int searchMember(String userId){
+	public String searchMember(String userId){
 		ConnectionManager mgr = new ConnectionManager();
 		Connection con = mgr.getConnection();
 		PreparedStatement pstmt = null;
@@ -75,13 +75,13 @@ public class MemberDAO {
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, "%"+userId+"%");
-			int count = pstmt.executeUpdate();
+			rs = pstmt.executeQuery();
 			
-			if(count == 1) {
-				return 1;
-			} else {
-				return 0;
+			if(rs.next()) {
+				name = rs.getString("user_id");
+				return name;
 			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -89,7 +89,7 @@ public class MemberDAO {
 			mgr.ConnectionClose(con, pstmt, rs);
 		}
 		
-		return -1; 
+		return name; 
 	}
 	
 	//회원 가입

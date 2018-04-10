@@ -17,15 +17,20 @@
 </head>
 <body>
 <%	
-	int result = (int) request.getAttribute("number");
-	if(result == 0){
-		
+	String result = (String)request.getAttribute("result");
+	String id = (String)request.getParameter("id");
+	if(result == null){
+		result ="";
+	} else if(result.equals(id) ){
+		System.out.print("중복된 아이디 입니다.");
+	} else{
+		System.out.print("사용가능한 아이디 입니다.");
 	}
 %>
 ID check
 <form action="./command?cmd=search" method="post">
 	아이디<input type="text" name="id" id="id">
-	<input type="submit" value="아이디확인">
+	<input type="submit" value="아이디 중복 체크">
 	<span id="msg"></span>
 	<button onclick="work_close()">아이디사용하기</button>
 </form>
