@@ -42,7 +42,7 @@
 				if(val=="0"){
 					processResultId(result);
 				} else {
-					pr(result);
+					zipcode(result);
 				}
 
 			} else if(this.readyState==4&&this.staus!=200){
@@ -71,8 +71,8 @@
 		}
 	}
 	
-	var pr = function(result){
-		window.open("postal.jsp","","width=600px height=400px");
+	var zipcode = function(result){
+		window.open("./postal.jsp","","width=600px height=400px");
 		document.getElementById("isZipCheck").value = true;
 		return false;
 	}
@@ -158,14 +158,14 @@
 	<tr><td>이름</td><td><input type="text" name="name" id="name" value="<%=vo.getName()%>"></td><td></td><td></td></tr>
 	<tr><td>우편번호</td>
 		<td>
-			<input type="text" name="zip1" size="3" value="<%=vo.getZipcode().split("-")[0]%>" id="zip1"> -
-			<input type="text" name="zip2" size="3" value="<%=vo.getZipcode().split("-")[1]%>" id="zip2">
+			<input type="text" name="zip1" id="zip1" size="3" value="<%=vo.getZipcode().split("-")[0]%>" id="zip1"> -
+			<input type="text" name="zip2" id="zip2" size="3" value="<%=vo.getZipcode().split("-")[1]%>" id="zip2">
 			<span id="zipmsg"></span>
 		</td>
 		<td><button onclick="return id_check_with_ajax(1)">우편번호검사</button></td>
 		<td><input type="hidden" name="isZipCheck" value="false" id="isZipCheck"></td></tr>
-	<tr><td>주소1</td><td><input type="text" name="addr1" size="30" value="<%=vo.getAddr1()%>"></td><td></td><td></td></tr>
-	<tr><td>주소2</td><td><input type="text" name="addr2" size="30" value="<%=vo.getAddr2()%>"></td><td></td><td></td></tr>
+	<tr><td>주소1</td><td><input type="text" name="addr1" size="30" id="addr1" value="<%=vo.getAddr1()%>"></td><td></td><td></td></tr>
+	<tr><td>주소2</td><td><input type="text" name="addr2" size="30" id="addr2" value="<%=vo.getAddr2()%>"></td><td></td><td></td></tr>
 	
 	<tr><td>이메일</td><td><input type="text" name="email" value="<%=vo.getEmail()%>"></td><td></td><td></td></tr>
 	<tr><td>사용언어</td><td>
@@ -183,11 +183,11 @@
 	<tr><td>프로젝트경험</td>
 		<td>
 		<select name="project" id="project">
-			<option value="0">프로젝트 경험
-			<option value="1" <%=vo.getProject().equals("1")?"selected":"" %>>1~2회
-			<option value="2" <%=vo.getProject().equals("2")?"selected":"" %>>3~4회
-			<option value="3" <%=vo.getProject().equals("3")?"selected":"" %>>5~6회
-			<option value="4" <%=vo.getProject().equals("4")?"selected":"" %>>7회이상
+			<option value="0">프로젝트 경험</option>
+			<option value="1" <%=vo.getProject().equals("1")?"selected":"" %>>1~2회</option>
+			<option value="2" <%=vo.getProject().equals("2")?"selected":"" %>>3~4회</option>
+			<option value="3" <%=vo.getProject().equals("3")?"selected":"" %>>5~6회</option>
+			<option value="4" <%=vo.getProject().equals("4")?"selected":"" %>>7회이상</option>
 		</select>
 		</td><td><button onclick="return select_check()">select 체크</button></td><td></td></tr>
 	<tr>
@@ -200,6 +200,7 @@
 	</tr>
 </table>	
 </form>
-
 </body>
 </html>
+
+			

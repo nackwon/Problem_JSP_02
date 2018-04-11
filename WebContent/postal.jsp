@@ -10,11 +10,15 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 	function select() {
-		var zipcode = document.getElementById("select").value.split(" ")[0];
-		document.getElementById("zip1").value = zipcode.split("-")[0];
-		document.getElementById("zip2").value = zipcode.split("-")[1];
-		var temp = document.getElementById("select").value.split(" ");
+		var val = document.getElementById("select").value;
+		var temp = val.split(" ");
+		var zipcode = temp[0].split("-");
+		var addr1 = val.substring(temp[0].length+1);
+		document.getElementById("zip1").value = zipcode[0];
+		document.getElementById("zip2").value = zipcode[1];
+		document.getElementById("addr1").value = addr1;
 	}
+	
 	function use_zipcode() {
 		var zip1 = document.getElementById("zip1").value;
 		var zip2 = document.getElementById("zip2").value;
@@ -32,8 +36,8 @@
 </head>
 <body>
 	<form action="./command?cmd=searchpost" method="post">
-		<input type="text" name="dong"> <input type="submit"
-			value="찾기">
+		<input type="text" name="dong"> 
+		<input type="submit" value="찾기">
 	</form>
 	<%
 		ArrayList<ZipCodeVO> list = (ArrayList<ZipCodeVO>) request.getAttribute("vo");
@@ -47,9 +51,8 @@
 			sb.append(vo.toString() + "</option>");
 		}
 		sb.append("</select>");
-		//out.print(sb.toString());
+		out.print(sb.toString());
 	%>
-	<%=sb.toString()%>
 	<br>
 	<br>
 	<br>
@@ -69,7 +72,6 @@
 			<td><input type="text" size="50" id="addr2"></td>
 		</tr>
 	</table>
-	<button onclick="use_zipcode(); return false">닫기</button>
-
+	<button onclick="use_zipcode()">사용하기</button>
 </body>
 </html>

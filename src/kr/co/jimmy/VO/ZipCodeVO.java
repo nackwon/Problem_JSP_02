@@ -17,7 +17,7 @@ public class ZipCodeVO {
 	}
 
 	public String toAddress() {
-		return String.format("%s %s %s %s %s %s", zipcode, sido,gugun,dong,ri,bldg);
+		return String.format("%s %s %s %s %s %s", zipcode,sido,gugun,dong,ri,bldg);
 	}
 	public String getZipcode() {
 		return zipcode;
