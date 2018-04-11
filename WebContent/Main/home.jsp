@@ -10,7 +10,7 @@
 <h1>HOME</h1>
 <a href="./command?cmd=registView">등록</a>
 <a href="./command?cmd=searchAll">전체 조회</a>
-<form action="./command?cmd=search" method="post">
+<form action="./command?cmd=searchMember" method="post">
 	<input type="text" name="id">
 	<input type="submit" value="찾기">
 </form>

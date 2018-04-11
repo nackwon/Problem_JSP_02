@@ -11,3 +11,5 @@ CREATE TABLE zipcode_tbl(
 	bldg VARCHAR2(100),
 	bunji VARCHAR2(100)
 );
+
+SELECT * FROM member_tbl;

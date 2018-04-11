@@ -29,7 +29,7 @@
 		opener.document.getElementById("zip2").value = zip2;
 		opener.document.getElementById("addr1").value = addr1;
 		opener.document.getElementById("addr2").value = addr2;
-
+		opener.document.getElementById("isZipCheck").value = true;
 		self.close();
 	}
 </script>

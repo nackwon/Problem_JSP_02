@@ -12,7 +12,6 @@ import kr.co.jimmy.connection.ConnectionManager;
 
 public class MemberDAO {
 
-	
 	//등록 인원 출력
 	public ArrayList<MemberVO> searchAll() {
 
@@ -62,8 +61,9 @@ public class MemberDAO {
 		}
 		return list;
 	}
-
-	public boolean searchMember(String userId){
+	
+	//id_check
+	public boolean id_check(String userId){
 		ConnectionManager mgr = new ConnectionManager();
 		Connection con = mgr.getConnection();
 		PreparedStatement pstmt = null;
@@ -90,6 +90,51 @@ public class MemberDAO {
 		}
 		
 		return flag; 
+	}
+	
+	public MemberVO searchMember(String userId) {
+		MemberVO vo = null;
+		ConnectionManager mgr = new ConnectionManager();
+		Connection con = mgr.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		String sql = "SELECT * FROM member_tbl WHERE user_id LIKE ?";
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "%"+userId+"%");
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				vo = new MemberVO();
+				vo.setId(rs.getString(1));
+				vo.setPw(rs.getString(2));
+				vo.setName(rs.getString(3));
+				vo.setEmail(rs.getString(4));
+				vo.setZipcode(rs.getString(5));
+				vo.setAddr1(rs.getString(6));
+				vo.setAddr2(rs.getString(7));
+				vo.setTool(rs.getString(8));
+				String temp= rs.getString(9);
+				
+				String[] vals = temp.split("-");
+				String[] langs = {"","","",""};
+				for (String index : vals) {
+					int idx = Integer.parseInt(index);
+					vals[idx] = index;
+				}
+				vo.setLangs(langs);
+				// MemberVO 데이터 클래스를 만들어서 인스턴스를 하나 생성
+				vo.setProject(rs.getString(10));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			mgr.ConnectionClose(con, pstmt, rs);
+		}
+		
+		return vo;
 	}
 	
 	//회원 가입

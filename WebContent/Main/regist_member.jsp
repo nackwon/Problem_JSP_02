@@ -24,21 +24,25 @@
 	
 	function id_check_with_ajax(val){
 		//alert("success");
+		var id = document.getElementById("userid").value;
 		var cmd;
 		if(val=='0'){
 			cmd = "id";
 		} else {
 			cmd = "zipcode";
 		}
-		alert(cmd);
 		//var server_page = "id_service.jsp?cmd="+cmd;
-		var server_page = "./Main/id_service.jsp";
-		var xhr = new XMLHttpRequest();
+		var server_page = "./command?cmd=viewIdService";
 		
+		var xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function(){
 			if(this.readyState==4&&this.status==200){
 				var result = this.responseText;
 				alert(result);
+				//Ajax 처리
+				/* var parse_Obj = JSON.parse(result);
+				alert(parse_Obj.user);
+				alert(parse_Obj.message); */
 				if(val=="0"){
 					processResultId(result);
 				} else {
@@ -52,7 +56,7 @@
 		
 		//xhr.open("GET", server_page, true);
 		//xhr.send();
-		data = "cmd="+cmd;
+		data = "cmd1="+cmd;
 		xhr.open("POST",server_page,true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhr.send(data);
@@ -60,20 +64,20 @@
 	}
 	
 	function processResultId(result){
-		if(result=="id"){
+		if(result=="use"){
 			//id값 사용가능
 			//히든부분 처리
 			document.getElementById("isIdCheck").value = true;
 			document.getElementById("message").innerHTML = "아이디 사용 가능";
-		} else {
+		} else if(result = "not"){
 			// id 사용불가를 표시해야 함
 			document.getElementById("message").innerHTML = "아이디 사용 불가능";
 		}
+		return false;
 	}
 	
 	var zipcode = function(result){
 		window.open("./postal.jsp","","width=600px height=400px");
-		document.getElementById("isZipCheck").value = true;
 		return false;
 	}
 	
@@ -147,7 +151,7 @@
 	<tr>
 		<td>아이디</td>
 		<td>
-			<input type="text" name="id" id="userid" value="<%=vo.getId()%>" readonly="readonly" onclick="id_check()">
+			<input type="text" name="id" id="userid" value="<%=vo.getId()%>"  readonly="readonly" onclick="id_check()" ><!-- --> 
 			<span id="message"></span>
 			</td>
 	    <td><button onclick="return id_check_with_ajax(0)">id check</button></td>

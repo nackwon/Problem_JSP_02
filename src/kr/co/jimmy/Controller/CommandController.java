@@ -70,12 +70,12 @@ public class CommandController extends HttpServlet {
 		} else if ("search".equals(cmd)) {
 			MemberDAO dao = new MemberDAO();
 			String id = request.getParameter("id");
-			boolean flag = dao.searchMember(id);
+			boolean flag = dao.id_check(id);
 			String message = "";
 			if(flag) {
-				message = "false";
+				message = "false"; // 아이디 사용 X
 			} else {
-				message = "true";
+				message = "true"; // 아이디 사용 가능
 			}
 			request.setAttribute("result", message);
 			url = "./id_check.jsp";
@@ -99,6 +99,14 @@ public class CommandController extends HttpServlet {
 
 			request.setAttribute("vo", list);
 			url = "./postal.jsp";
+		} else if("searchMember".equals(cmd)) {
+			String id 	= request.getParameter("id");
+			MemberDAO dao = new MemberDAO();
+			MemberVO vo = new MemberVO();
+			vo = dao.searchMember(id);
+			url = "./Main/regist_member.jsp";
+		} else if("viewIdService".equals(cmd)) {
+			url = "./Main/id_service.jsp";
 		}
 
 		RequestDispatcher rd = request.getRequestDispatcher(url);
