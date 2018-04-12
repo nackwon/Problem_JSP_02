@@ -16,21 +16,21 @@ public class MemberDAO {
 	public ArrayList<MemberVO> searchAll() {
 
 		ArrayList<MemberVO> list = null;
-
 		ConnectionManager mgr = new ConnectionManager();
 		Connection con = mgr.getConnection();
 		Statement stmt = null;
 		ResultSet rs = null;
 
 		String sql = "SELECT * FROM member_tbl";
-
+		
 		try {
+			MemberVO vo = null;
+			list = new ArrayList<MemberVO>();
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(sql);
-
-			MemberVO vo = null;
-			if (rs.next()) {
-				vo = new MemberVO();
+			
+			while(rs.next()) {
+				vo =  new MemberVO();
 				vo.setId(rs.getString(1));
 				vo.setPw(rs.getString(2));
 				vo.setName(rs.getString(3));
@@ -45,12 +45,11 @@ public class MemberDAO {
 				String[] langs = {"","","",""};
 				for (String index : vals) {
 					int idx = Integer.parseInt(index);
-					vals[idx] = index;
+					langs[idx] = index;
 				}
 				vo.setLangs(langs);
-				// MemberVO 데이터 클래스를 만들어서 인스턴스를 하나 생성
 				vo.setProject(rs.getString(10));
-
+				
 				list.add(vo);
 			}
 		} catch (SQLException e) {
@@ -92,6 +91,7 @@ public class MemberDAO {
 		return flag; 
 	}
 	
+	//멤버 찾기
 	public MemberVO searchMember(String userId) {
 		MemberVO vo = null;
 		ConnectionManager mgr = new ConnectionManager();
@@ -122,7 +122,7 @@ public class MemberDAO {
 				String[] langs = {"","","",""};
 				for (String index : vals) {
 					int idx = Integer.parseInt(index);
-					vals[idx] = index;
+					langs[idx] = index;
 				}
 				vo.setLangs(langs);
 				// MemberVO 데이터 클래스를 만들어서 인스턴스를 하나 생성
@@ -179,5 +179,63 @@ public class MemberDAO {
 			mgr.ConnectionClose(con, pstmt, null);
 		}
 		return flag;
+	}
+	
+	// 유저 입력 값 수정
+	public void updateMember(MemberVO vo) {
+		ConnectionManager mgr = new ConnectionManager();
+		Connection con = mgr.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "UPDATE member_tbl SET user_id=?,user_pw=?,user_name=?,email=?,zipcode=?,addr1=?,addr2=?,tool=?,lang=?,prj=?";
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, vo.getId());
+			pstmt.setString(2, vo.getPw());
+			pstmt.setString(3, vo.getName());
+			pstmt.setString(4, vo.getEmail());
+			pstmt.setString(5, vo.getZipcode());
+			pstmt.setString(6, vo.getAddr1());
+			pstmt.setString(7, vo.getAddr2());
+			pstmt.setString(8, vo.getTool());
+			String[] temp = vo.getLangs();
+			StringBuffer sb = new StringBuffer(temp[0]);
+			for(int i=1;i<temp.length;i++) {
+				sb.append("-"+temp[i]);
+			}
+			pstmt.setString(9, sb.toString());
+			pstmt.setString(10, vo.getProject());
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			mgr.ConnectionClose(con, pstmt, rs);
+		}
+	}
+	
+	public void deleteMember(String userId) {
+		ConnectionManager mgr = new ConnectionManager();
+		Connection con = mgr.getConnection();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "DELETE member_tbl WHERE user_id LIKE ?";
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "%"+userId+"%");
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			mgr.ConnectionClose(con, pstmt, rs);
+		}
 	}
 }

@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="./command?cmd=insert" method="post"> 
+	<form action="./command?cmd=insertzipcode" method="post"> 
 		<input type="submit" value="전송">
 	</form>
 </body>
