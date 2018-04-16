@@ -3,6 +3,16 @@
 	xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd ">
 	<servlet>
+		<servlet-name>handler</servlet-name>
+		<servlet-class>kr.co.jimmy.Controller.HandlerController</servlet-class>
+		<load-on-startup>1</load-on-startup><!-- 이 서블릿의 우선순위를 정해줌 -->
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>handler</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>commandcontroller</servlet-name>
 		<servlet-class>kr.co.jimmy.Controller.CommandController</servlet-class>
 	</servlet>	

@@ -1,0 +1,1 @@
+/search.do=kr.co.jimmy.handler.SearchHandler

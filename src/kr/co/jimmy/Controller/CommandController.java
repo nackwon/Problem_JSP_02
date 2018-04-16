@@ -80,14 +80,7 @@ public class CommandController extends HttpServlet {
 			}
 			request.setAttribute("result", message);
 			url = "./id_check.jsp";
-		} else if ("searchAll".equals(cmd)) {
-			MemberDAO dao = new MemberDAO();
-			ArrayList<MemberVO> list = new ArrayList<MemberVO>();
-			list = dao.searchAll();
-
-			request.setAttribute("member", list);
-			url = "./Main/list.jsp";
-		} else if ("insertzipcode".equals(cmd)) {
+		}  else if ("insertzipcode".equals(cmd)) {
 			String path = this.getServletContext().getRealPath("WEB-INF/file/zipcode.csv");
 			ZipcodeDAO dao = new ZipcodeDAO();
 			dao.InsertZipcodeV2(path);
